@@ -1,0 +1,22 @@
+{
+	"GitHub Webhook - CSharp": {
+		"prefix": "githubwebhook-csharp",
+		"body": [
+			"using System.Net;",
+
+			"public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)",
+			"{",
+				"\tlog.Info($\"C# HTTP trigger function processed a request. RequestUri={req.RequestUri}\");",
+				"\n",
+				"\t// Get request body",
+				"\tdynamic data = await req.Content.ReadAsAsync<object>();",
+				"\n",
+				"\t// Extract github comment from request body",
+				"\tstring gitHubComment = data?.comment?.body;",
+				"\n",
+				"\treturn req.CreateResponse(HttpStatusCode.OK, \"From Github:\" + gitHubComment);",
+			"}"
+		],
+        "description": "A C# function that will be run whenever it receives a GitHub webhook request"
+	}
+}

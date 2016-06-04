@@ -1,0 +1,14 @@
+{
+	"GitHub Webhook - Node": {
+		"prefix": "githubwebhook-js",
+		"body": [
+			"// Please visit http://go.microsoft.com/fwlink/?LinkID=761099&clcid=0x409 for more information on settting up Github Webhooks",
+			"module.exports = function (context, data) {",
+			"\tcontext.log('GitHub Webhook triggered!', data.comment.body);",
+			"context.res = { body: 'New GitHub comment: ' + data.comment.body };",
+			"context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever it receives a GitHub webhook request"
+	}
+}

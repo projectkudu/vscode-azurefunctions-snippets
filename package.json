@@ -1,0 +1,29 @@
+{
+    "name": "AzureFunctions",
+    "publisher": "hhawkins",
+    "displayName": "Azure Functions snippets",
+    "description": "Azure Functions snippets for C# and JavaScript",
+    "galleryBanner": {
+        "color": "#0273D4",
+        "theme": "dark"
+    },
+    "version": "0.1.0",
+    "engines": {
+        "vscode": "0.10.x"
+    },
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "csharp",
+                "path": "./snippets/csharp.json"
+            },
+            {
+                "language": "javascript",
+                "path": "./snippets/javascript.json"
+            }
+        ]
+    }
+}
