@@ -1,6 +1,6 @@
 {
 	"GitHub Webhook - C#": {
-		"prefix": "githubwebhook-csharp",
+		"prefix": "azurefunctions-githubwebhook-csharp",
 		"body": [
 			"using System.Net;",
 
@@ -21,7 +21,7 @@
 	},
 	
 	"BlobTrigger - C#": {
-		"prefix": "blobtrigger-csharp",
+		"prefix": "azurefunctions-blobtrigger-csharp",
 		"body": [
 			"using System;",
 			"",
@@ -34,7 +34,7 @@
 	},
 	
 	"EventHubTrigger - C#": {
-		"prefix": "eventhubtrigger-csharp",
+		"prefix": "azurefunctions-eventhubtrigger-csharp",
 		"body": [
 			"using System;",
 			"",
@@ -47,7 +47,7 @@
 	},
 	
 	"GenericWebHook - C#": {
-		"prefix": "genericwebhook-csharp",
+		"prefix": "azurefunctions-genericwebhook-csharp",
 		"body": [
 			"#r \"Newtonsoft.Json\"",
 			"",
@@ -77,7 +77,7 @@
 	},
 	
 	"GitHubCommenter - C#": {
-		"prefix": "githubcommenter-csharp",
+		"prefix": "azurefunctions-githubcommenter-csharp",
 		"body": [
 			"// Please follow the link https://developer.github.com/v3/oauth/ to get information on GitHub authentication",
 			"",
@@ -136,7 +136,7 @@
 	},
 	
 	"HttpGET(CRUD) - C#": {
-		"prefix": "httpget(crud)-csharp",
+		"prefix": "azurefunctions-httpget(crud)-csharp",
 		"body": [
 			"#r \"Microsoft.WindowsAzure.Storage\"",
 			"",
@@ -162,7 +162,7 @@
 	},
 	
 	"HttpPost(CRUD) - C#": {
-		"prefix": "httppost(crud)-csharp",
+		"prefix": "azurefunctions-httppost(crud)-csharp",
 		"body": [
 			"#r \"Microsoft.WindowsAzure.Storage\"",
 			"",
@@ -197,7 +197,7 @@
 	},
 	
 	"HttpTrigger - C#": {
-		"prefix": "httptrigger-csharp",
+		"prefix": "azurefunctions-httptrigger-csharp",
 		"body": [
 			"using System.Net;",
 			"",
@@ -225,7 +225,7 @@
 	},
 	
 	"ImageResizer - C#": {
-		"prefix": "imageresizer-csharp",
+		"prefix": "azurefunctions-imageresizer-csharp",
 		"body": [
 			"#r \"Microsoft.WindowsAzure.Storage\"",
 			"#r \"System.Drawing\"",
@@ -324,7 +324,7 @@
 	},
 	
 	"ManualTrigger - C#": {
-		"prefix": "manualtrigger-csharp",
+		"prefix": "azurefunctions-manualtrigger-csharp",
 		"body": [
 			"using System;",
 			"",
@@ -337,7 +337,7 @@
 	},
 	
 	"QueueTrigger - C#": {
-		"prefix": "queuetrigger-csharp",
+		"prefix": "azurefunctions-queuetrigger-csharp",
 		"body": [
 			"using System;",
 			"",
@@ -350,7 +350,7 @@
 	},
 	
 	"SaaSFileTrigger - C#": {
-		"prefix": "saasfiletrigger-csharp",
+		"prefix": "azurefunctions-saasfiletrigger-csharp",
 		"body": [
 			"using System;",
 			"",
@@ -365,7 +365,7 @@
 	},
 	
 	"ServiceBusQueueTrigger - C#": {
-		"prefix": "servicebusqueuetrigger-csharp",
+		"prefix": "azurefunctions-servicebusqueuetrigger-csharp",
 		"body": [
 			"using System;",
 			"using System.Threading.Tasks;",
@@ -379,7 +379,7 @@
 	},
 	
 	"TimerTrigger - C#": {
-		"prefix": "timertrigger-csharp",
+		"prefix": "azurefunctions-timertrigger-csharp",
 		"body": [
 			"using System;",
 			"",
