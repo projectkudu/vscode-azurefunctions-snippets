@@ -7,7 +7,20 @@ Type part of a snippet, press `enter`, and the snippet unfolds.
 
 ### C\# Snippets
 ```csharp
-githubwebhook-csharp  // A C# function that will be run whenever it receives a GitHub webhook request
+azurefunctions-githubwebhook-csharp  // A C# function that will be run whenever it receives a GitHub webhook request
+azurefunctions-blobtrigger-csharp // A C# function that will be run whenever a blob is added to a specified container
+azurefunctions-eventhubtrigger-csharp // A C# function that will be run whenever an event hub receives a new event
+azurefunctions-genericwebhook-csharp // A C# function that will be run whenever it receives a webhook request
+azurefunctions-githubcommenter-csharp // A C# function that will be run whenever it receives a GitHub webhook request
+azurefunctions-httpget(crud)-csharp // A C# function that fetches entities from a Storage Table when it receives an HTTP request
+azurefunctions-httppost(crud)-csharp // A C# function that adds entities to a Storage Table when it receives an HTTP request
+azurefunctions-httptrigger-csharp // A C# function that will be run whenever it receives an HTTP request
+azurefunctions-imageresizer-csharp // A C# function that creates resized images whenever a blob is added to a specified container
+azurefunctions-manualtrigger-csharp // A C# function that is triggered manually via the portal \"Run\" button
+azurefunctions-queuetrigger-csharp // A C# function that will be run whenever a message is added to a specified Azure Storage queue
+azurefunctions-saasfiletrigger-csharp // A C# function that will be run whenever a file is added to a SaaS provider.
+azurefunctions-servicebusqueuetrigger-csharp // A C# function that will be run whenever a message is added to a specified Service Bus queue
+azurefunctions-timertrigger-csharp // A C# function that will be run on a specified schedule
 ```
 
 ### JavaScript Snippets
