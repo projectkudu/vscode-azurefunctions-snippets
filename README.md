@@ -42,6 +42,8 @@ azurefunctions-saasfiletrigger-js //A Node.js function that will be run whenever
 azure-functions-timer-trigger // A Node.js function that will be run on a specified schedule
 ```
 
+Alternatively, press `Ctrl`+`Space` (Windows, Linux) or `Cmd`+`Space` (OSX) to activate snippets from within the editor.
+
 ## Installation
 
 1. Install Visual Studio Code 0.10.1 or higher
