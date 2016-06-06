@@ -1,5 +1,5 @@
 {
-	"GitHub Webhook - CSharp": {
+	"GitHub Webhook - C#": {
 		"prefix": "githubwebhook-csharp",
 		"body": [
 			"using System.Net;",
@@ -18,5 +18,376 @@
 			"}"
 		],
         "description": "A C# function that will be run whenever it receives a GitHub webhook request"
+	},
+	
+	"BlobTrigger - C#": {
+		"prefix": "blobtrigger-csharp",
+		"body": [
+			"using System;",
+			"",
+			"public static void Run(string myBlob, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# Blob trigger function processed: {myBlob}\");",
+			"}"
+		],
+		"description": "A C# function that will be run whenever a blob is added to a specified container"
+	},
+	
+	"EventHubTrigger - C#": {
+		"prefix": "eventhubtrigger-csharp",
+		"body": [
+			"using System;",
+			"",
+			"public static void Run(string myEventHubMessage, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# Event Hub trigger function processed a message: {myEventHubMessage}\");",
+			"}"
+		],
+		"description": "A C# function that will be run whenever an event hub receives a new event"
+	},
+	
+	"GenericWebHook - C#": {
+		"prefix": "genericwebhook-csharp",
+		"body": [
+			"#r \"Newtonsoft.Json\"",
+			"",
+			"using System;",
+			"using System.Net;",
+			"using Newtonsoft.Json;",
+			"",
+			"public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)",
+			"{",
+			"    log.Info($\"Webhook was triggered!\");",
+			"",
+			"    string jsonContent = await req.Content.ReadAsStringAsync();",
+			"    dynamic data = JsonConvert.DeserializeObject(jsonContent);",
+			"",
+			"    if (data.first == null || data.last == null) {",
+			"        return req.CreateResponse(HttpStatusCode.BadRequest, new {",
+			"            error = \"Please pass first/last properties in the input object\"",
+			"        });",
+			"    }",
+			"",
+			"    return req.CreateResponse(HttpStatusCode.OK, new {",
+			"        greeting = $\"Hello {data.first} {data.last}!\"",
+			"    });",
+			"}"
+		],
+		"description": "A C# function that will be run whenever it receives a webhook request"
+	},
+	
+	"GitHubCommenter - C#": {
+		"prefix": "githubcommenter-csharp",
+		"body": [
+			"// Please follow the link https://developer.github.com/v3/oauth/ to get information on GitHub authentication",
+			"",
+			"using System.Net;",
+			"using System.Net.Http;",
+			"using System.Net.Http.Headers;",
+			"using System.Text;",
+			"",
+			"public static async Task Run(dynamic payload, TraceWriter log)",
+			"{",
+			"    if (payload.action != \"opened\")",
+			"    {",
+			"        return;",
+			"    }",
+			"",
+			"    string comment = \"{ \"body\": \"Thank you for your contribution, We will get to it shortly\" }\";",
+			"    string label = \"[ \"bug\" ]\";",
+			"    ",
+			"    if (payload.issue != null)",
+			"    {",
+			"        log.Info($\"{payload.issue.user.login} posted an issue #{payload.issue.number}:{payload.issue.title}\");",
+			"",
+			"        //Post a comment ",
+			"        await SendGitHubRequest(payload.issue.comments_url.ToString(), comment);",
+			"",
+			"        //Add a label",
+			"        await SendGitHubRequest($\"{payload.issue.url.ToString()}/labels\", label);",
+			"    }",
+			"",
+			"    if (payload.pull_request != null)",
+			"    {",
+			"        log.Info($\"{payload.pull_request.user.login} submitted pull request #{payload.pull_request.number}:{payload.pull_request.title}\");",
+			"",
+			"        // posting a comment",
+			"        await SendGitHubRequest(payload.pull_request.comments_url.ToString(), comment);",
+			"    }",
+			"}",
+			"",
+			"public static async Task SendGitHubRequest(string url, string requestBody)",
+			"{",
+			"    using (var client = new HttpClient())",
+			"    {",
+			"        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(\"username\", \"version\"));",
+			"",
+			"        // Add the GITHUB_CREDENTIALS as an app setting, Value for the app setting is a base64 encoded string in the following format",
+			"        // \"Username:Password\" or \"Username:PersonalAccessToken\"",
+			"        // Please follow the link https://developer.github.com/v3/oauth/ to get more information on GitHub authentication ",
+			"        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Basic\", Environment.GetEnvironmentVariable(\"GITHUB_CREDENTIALS\"));",
+			"        var content = new StringContent(requestBody, Encoding.UTF8, \"application/json\");",
+			"        await client.PostAsync(url, content);",
+			"    }",
+			"}"
+
+		],
+		"description": "A C# function that will be run whenever it receives a GitHub webhook request"
+	},
+	
+	"HttpGET(CRUD) - C#": {
+		"prefix": "httpget(crud)-csharp",
+		"body": [
+			"#r \"Microsoft.WindowsAzure.Storage\"",
+			"",
+			"using System.Net;",
+			"using Microsoft.WindowsAzure.Storage.Table;",
+			"",
+			"public static HttpResponseMessage Run(HttpRequestMessage req, IQueryable<Person> inTable, TraceWriter log)",
+			"{",
+			"    var query = from person in inTable select person;",
+			"    foreach (Person person in query)",
+			"    {",
+			"        log.Info($\"Name:{person.Name}\");",
+			"    }",
+			"    return req.CreateResponse(HttpStatusCode.OK, inTable.ToList());",
+			"}",
+			"",
+			"public class Person : TableEntity",
+			"{",
+			"    public string Name { get; set; }",
+			"}"
+		],
+		"description": "A C# function that fetches entities from a Storage Table when it receives an HTTP request"
+	},
+	
+	"HttpPost(CRUD) - C#": {
+		"prefix": "httppost(crud)-csharp",
+		"body": [
+			"#r \"Microsoft.WindowsAzure.Storage\"",
+			"",
+			"using System.Net;",
+			"using Microsoft.WindowsAzure.Storage.Table;",
+			"",
+			"public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, ICollector<Person> outTable, TraceWriter log)",
+			"{",
+			"    dynamic data = await req.Content.ReadAsAsync<object>();",
+			"    string name = data?.name;",
+			"",
+			"    if (name == null)",
+			"    {",
+			"        return req.CreateResponse(HttpStatusCode.BadRequest, \"Please pass a name in the request body\");",
+			"    }",
+			"",
+			"    outTable.Add(new Person()",
+			"    {",
+			"        PartitionKey = \"Functions\",",
+			"        RowKey = Guid.NewGuid().ToString(),",
+			"        Name = name",
+			"    });",
+			"    return req.CreateResponse(HttpStatusCode.Created);",
+			"}",
+			"",
+			"public class Person : TableEntity",
+			"{",
+			"    public string Name { get; set; }",
+			"}"
+		],
+		"description": "A C# function that adds entities to a Storage Table when it receives an HTTP request"
+	},
+	
+	"HttpTrigger - C#": {
+		"prefix": "httptrigger-csharp",
+		"body": [
+			"using System.Net;",
+			"",
+			"public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# HTTP trigger function processed a request. RequestUri={req.RequestUri}\");",
+			"",
+			"    // parse query parameter",
+			"    string name = req.GetQueryNameValuePairs()",
+			"        .FirstOrDefault(q => string.Compare(q.Key, \"name\", true) == 0)",
+			"        .Value;",
+			"",
+			"    // Get request body",
+			"    dynamic data = await req.Content.ReadAsAsync<object>();",
+			"",
+			"    // Set name to query string or body data",
+			"    name = name ?? data?.name;",
+			"",
+			"    return name == null",
+			"        ? req.CreateResponse(HttpStatusCode.BadRequest, \"Please pass a name on the query string or in the request body\")",
+			"        : req.CreateResponse(HttpStatusCode.OK, \"Hello \" + name);",
+			"}"
+		],
+		"description": "A C# function that will be run whenever it receives an HTTP request"
+	},
+	
+	"ImageResizer - C#": {
+		"prefix": "imageresizer-csharp",
+		"body": [
+			"#r \"Microsoft.WindowsAzure.Storage\"",
+			"#r \"System.Drawing\"",
+			"",
+			"using System;",
+			"using System.Linq;",
+			"using System.Threading.Tasks;",
+			"using Microsoft.Azure.WebJobs.Host;",
+			"using Microsoft.WindowsAzure.Storage.Blob;",
+			"using System.IO;",
+			"using System.Drawing;",
+			"using System.Drawing.Imaging;",
+			"",
+			"// Use the ImageResizer NuGet to resize images based a blob trigger.",
+			"// Currently, NuGet restore doesn't work for templates. To trigger a restore manually, go to your Kudu site and touch project.json. ",
+			"// Go to http://yoursite.scm.azurewebsites.net/DebugConsole, then edit site/wwwroot/ImageResizerCSharp/project.json.",
+			"// Or, use the version based on System.Drawing by commenting out this method and using statement and uncommenting the one below.",
+			"using ImageResizer;",
+			"",
+			"public static void Run(",
+			"    Stream image,                           // input blob, large size",
+			"    Stream imageSmall, Stream imageMedium)  // output blobs",
+			"{",
+			"    var imageBuilder = ImageResizer.ImageBuilder.Current;",
+			"    var size = imageDimensionsTable[ImageSize.Small];",
+			"",
+			"    imageBuilder.Build(",
+			"        image, imageSmall, ",
+			"        new ResizeSettings(size.Width, size.Height, FitMode.Max, null), false);",
+			"",
+			"    image.Position = 0;",
+			"    size = imageDimensionsTable[ImageSize.Medium];",
+			"",
+			"    imageBuilder.Build(",
+			"        image, imageMedium,",
+			"        new ResizeSettings(size.Width, size.Height, FitMode.Max, null), false);",
+			"}",
+			"",
+			"// Image resize based on System.Drawing. Do NOT use in production!  ",
+			"// See http://www.asprangers.com/post/2012/03/23/Why-you-should-not-use-SystemDrawing-from-ASPNET-applications.aspx ",
+			"// public static void Run(",
+			"//     Stream image,                           // input blob, large size",
+			"//     Stream imageSmall, Stream imageMedium)  // output blobs",
+			"// {",
+			"//     ScaleImage(image, imageSmall, ImageSize.Small);",
+			"//     ScaleImage(image, imageMedium, ImageSize.Medium);",
+			"// }",
+			"",
+			"#region Helpers",
+			"",
+			"public enum ImageSize",
+			"{",
+			"    ExtraSmall, Small, Medium",
+			"}",
+			"",
+			"private static Dictionary<ImageSize, Size> imageDimensionsTable = new Dictionary<ImageSize, Size>()",
+			"{",
+			"    { ImageSize.ExtraSmall, new Size(320, 200) },",
+			"    { ImageSize.Small, new Size(640, 400) },",
+			"    { ImageSize.Medium, new Size(800, 600) }",
+			"};",
+			"",
+			"private static ImageFormat ScaleImage(Stream blobInput, Stream output, ImageSize imageSize)",
+			"{",
+			"    ImageFormat imageFormat;",
+			"",
+			"    var size = imageDimensionsTable[imageSize];",
+			"",
+			"    blobInput.Position = 0;",
+			"",
+			"    using (var img = System.Drawing.Image.FromStream(blobInput)) {",
+			"        var widthRatio = (double)size.Width / (double)img.Width;",
+			"        var heightRatio = (double)size.Height / (double)img.Height;",
+			"        var minAspectRatio = Math.Min(widthRatio, heightRatio);",
+			"        if (minAspectRatio > 1) {",
+			"            size.Width = img.Width;",
+			"            size.Width = img.Height;",
+			"        }",
+			"        else {",
+			"            size.Width = (int)(img.Width * minAspectRatio);",
+			"            size.Height = (int)(img.Height * minAspectRatio);",
+			"        }",
+			"",
+			"        using (Bitmap bitmap = new Bitmap(img, size)) {",
+			"            bitmap.Save(output, img.RawFormat);",
+			"            imageFormat = img.RawFormat;",
+			"        }",
+			"    }",
+			"",
+			"    return imageFormat;",
+			"}",
+			"",
+			"#endregion"
+		],
+		"description": "A C# function that creates resized images whenever a blob is added to a specified container"
+	},
+	
+	"ManualTrigger - C#": {
+		"prefix": "manualtrigger-csharp",
+		"body": [
+			"using System;",
+			"",
+			"public static void Run(string input, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# manually triggered function called with input: {input}\");",
+			"}"
+		],
+		"description": "A C# function that is triggered manually via the portal \"Run\" button"
+	},
+	
+	"QueueTrigger - C#": {
+		"prefix": "queuetrigger-csharp",
+		"body": [
+			"using System;",
+			"",
+			"public static void Run(string myQueueItem, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# Queue trigger function processed: {myQueueItem}\");",
+			"}"
+		],
+		"description": "A C# function that will be run whenever a message is added to a specified Azure Storage queue"
+	},
+	
+	"SaaSFileTrigger - C#": {
+		"prefix": "saasfiletrigger-csharp",
+		"body": [
+			"using System;",
+			"",
+			"public static void Run(string input, out string output, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# SaaS trigger function processed a file!\");",
+			"    ",
+			"    output = input;",
+			"}"
+		],
+		"description": "A C# function that will be run whenever a file is added to a SaaS provider."
+	},
+	
+	"ServiceBusQueueTrigger - C#": {
+		"prefix": "servicebusqueuetrigger-csharp",
+		"body": [
+			"using System;",
+			"using System.Threading.Tasks;",
+			"",
+			"public static void Run(string myQueueItem, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# ServiceBus queue trigger function processed message: {myQueueItem}\");",
+			"}"
+		],
+		"description": "A C# function that will be run whenever a message is added to a specified Service Bus queue"
+	},
+	
+	"TimerTrigger - C#": {
+		"prefix": "timertrigger-csharp",
+		"body": [
+			"using System;",
+			"",
+			"public static void Run(TimerInfo myTimer, TraceWriter log)",
+			"{",
+			"    log.Info($\"C# Timer trigger function executed at: {DateTime.Now}\");    ",
+			"}"
+		],
+		"description": "A C# function that will be run on a specified schedule"
 	}
 }
