@@ -25,10 +25,22 @@ azurefunctions-timertrigger-csharp // A C# function that will be run on a specif
 
 ### JavaScript Snippets
 ```javascript
-githubwebhook-js  // A Node.js function that will be run whenever it receives a GitHub webhook request
+azurefunctions-githubwebhook-js  // A Node.js function that will be run whenever it receives a GitHub webhook request
+azurefunctions-blobtrigger-js // A Node.js function that will be run whenever a blob is added to a specified container
+azurefunctions-emptynode-js // An empty Node.js function without triggers, inputs, or outputs
+azurefunctions-eventhubtrigger-js // A Node.js function that will be run whenever an event hub receives a new event
+azurefunctions-genericwebhook-js // A Node.js function that will be run whenever it receives a webhook request
+azurefunctions-githubwebhook-js // A Node.js function that will be run whenever it receives a GitHub webhook request
+azurefunctions-httpget(crud)-js // A Node.js function that fetches entities from a Storage Table when it receives an HTTP request
+azurefunctions-httppost(crud)-js // A Node.js function that adds entities to a Storage Table when it receives an HTTP request
+azurefunctions-httptrigger-js // A Node.js function that will be run whenever it receives an HTTP request
+azurefunctions-manualtrigger-js // A Node.js function that is triggered manually via the portal \"Run\" button
+azurefunctions-queuetrigger-js // A Node.js function that will be run whenever a message is added to a specified Azure Storage queue
+azurefunctions-saasfiletrigger-js // A Node.js function that will be run whenever a message is added to the specified Service Bus topic
+azurefunctions-servicebustopictrigger-js // A Node.js function that will be run whenever a message is added to the specified Service Bus topic
+azurefunctions-saasfiletrigger-js //A Node.js function that will be run whenever a file is added to a SaaS provider.
+azure-functions-timer-trigger // A Node.js function that will be run on a specified schedule
 ```
-
-Alternatively, press `Ctrl`+`Space` (Windows, Linux) or `Cmd`+`Space` (OSX) to activate snippets from within the editor.
 
 ## Installation
 

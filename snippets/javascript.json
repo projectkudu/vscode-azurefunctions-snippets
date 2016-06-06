@@ -195,7 +195,7 @@
 	"TimerTrigger - JS": {
 		"prefix": "azurefunctions-TimerTrigger-js",
 		"body": [
-			
+
 		],
 		"description": "A Node.js function that will be run on a specified schedule"
 	}
