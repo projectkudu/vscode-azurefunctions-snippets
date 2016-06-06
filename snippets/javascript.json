@@ -1,6 +1,6 @@
 {
-	"GitHub Webhook - Node": {
-		"prefix": "githubwebhook-js",
+	"GitHub Webhook - JS": {
+		"prefix": "azurefunctions-githubwebhook-js",
 		"body": [
 			"// Please visit http://go.microsoft.com/fwlink/?LinkID=761099&clcid=0x409 for more information on settting up Github Webhooks",
 			"module.exports = function (context, data) {",
@@ -10,5 +10,193 @@
 			"};"
 		],
 		"description": "A Node.js function that will be run whenever it receives a GitHub webhook request"
+	},
+
+	"BlobTrigger - JS": {
+		"prefix": "azurefunctions-blobtrigger-js",
+		"body": [
+			"module.exports = function (context, myBlob) {",
+			"    context.log('Node.js blob trigger function processed blob:', myBlob);",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever a blob is added to a specified container"
+	},
+
+	"EmptyNode - JS": {
+		"prefix": "azurefunctions-emptynode-js",
+		"body": [
+			"module.exports = function (context) {    ",
+			"    context.done();",
+			"};"
+		],
+		"description": "An empty Node.js function without triggers, inputs, or outputs"
+	},
+
+	"EventHubTrigger - JS": {
+		"prefix": "azurefunctions-eventhubtrigger-js",
+		"body": [
+			"module.exports = function (context, myEventHubTrigger) {",
+			"    context.log('Node.js eventhub trigger function processed work item', myEventHubTrigger);",
+			"",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever an event hub receives a new event"
+	},
+
+	"GenericWebhook - JS": {
+		"prefix": "azurefunctions-genericwebhook-js",
+		"body": [
+			"module.exports = function (context, data) {",
+			"    context.log('Webhook was triggered!');",
+			"",
+			"    // Check if we got first/last properties",
+			"    if('first' in data && 'last' in data) {",
+			"        context.res = {",
+			"            body: { greeting: 'Hello ' + data.first + ' ' + data.last + '!'}",
+			"        };",
+			"    }",
+			"    else {",
+			"        context.res = {",
+			"            status: 400,",
+			"            body: { error: 'Please pass first/last properties in the input object'}",
+			"        };",
+			"    }",
+			"",
+			"    context.done();",
+			"}"
+		],
+		"description": "A Node.js function that will be run whenever it receives a webhook request"
+	},
+
+	"GithubWebhook - JS": {
+		"prefix": "azurefunctions-githubwebhook-js",
+		"body": [
+			"// Please visit http://go.microsoft.com/fwlink/?LinkID=761099&clcid=0x409 for more information on settting up Github Webhooks",
+			"module.exports = function (context, data) {",
+			"    context.log('GitHub Webhook triggered!', data.comment.body);",
+			"    context.res = { body: 'New GitHub comment: ' + data.comment.body };",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever it receives a GitHub webhook request"
+	},
+
+	"HttpGET(CRUD) - JS": {
+		"prefix": "azurefunctions-httpget(crud)-js",
+		"body": [
+			"module.exports = function (context, req, intable) {",
+			"    context.log(\"Retrieved records:\", intable);",
+			"    context.res = {",
+			"        status: 200,",
+			"        body: intable",
+			"    };",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that fetches entities from a Storage Table when it receives an HTTP request"
+	},
+
+	"HttpPOST(CRUD) - JS": {
+		"prefix": "azurefunctions-httppost(crud)-js",
+		"body": [
+			"module.exports = function (context, req) {",
+			"    var statusCode = 400;",
+			"    var responseBody = \"Invalid request object\";",
+			"",
+			"    if (typeof req.body != 'undefined' && typeof req.body == 'object') {",
+			"        statusCode = 201;",
+			"        context.bindings.outTable = req.body;",
+			"        responseBody = \"Table Storage Created\";",
+			"    }",
+			"",
+			"    context.res = {",
+			"        status: statusCode,",
+			"        body: responseBody",
+			"    };",
+			"",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that adds entities to a Storage Table when it receives an HTTP request"
+	},
+
+	"HttpTrigger - JS": {
+		"prefix": "azurefunctions-httptrigger-js",
+		"body": [
+			"module.exports = function(context, req) {",
+			"    context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', req.originalUrl);",
+			"",
+			"    if (req.query.name || (req.body && req.body.name)) {",
+			"        context.res = {",
+			"            // status: 200, /* Defaults to 200 */",
+			"            body: \"Hello \" + (req.query.name || req.body.name)",
+			"        };",
+			"    }",
+			"    else {",
+			"        context.res = {",
+			"            status: 400,",
+			"            body: \"Please pass a name on the query string or in the request body\"",
+			"        };",
+			"    }",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever it receives an HTTP request"
+	},
+
+	"ManualTrigger - JS": {
+		"prefix": "azurefunctions-manualtrigger-js",
+		"body": [
+			"module.exports = function (context, input) {",
+			"    context.log('Node.js manually triggered function called with input:', input);",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that is triggered manually via the portal \"Run\" button"
+	},
+
+	"QueueTrigger - JS": {
+		"prefix": "azurefunctions-queuetrigger-js",
+		"body": [
+			"module.exports = function (context, myQueueItem) {",
+			"    context.log('Node.js queue trigger function processed work item', myQueueItem);",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever a message is added to a specified Azure Storage queue"
+	},
+
+	"SaaSFileTrigger - JS": {
+		"prefix": "azurefunctions-saasfiletrigger-js",
+		"body": [
+			"module.exports = function (context, input) {",
+			"    context.log('Node.js SaaS trigger function processed a file!');",
+			"    context.done(null, {",
+			"        output: input",
+			"    });",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever a file is added to a SaaS provider."
+	},
+
+	"ServiceBusTopicTrigger - JS": {
+		"prefix": "azurefunctions-servicebustopictrigger-js",
+		"body": [
+			"module.exports = function(context, mySbMsg) {",
+			"    context.log('Node.js ServiceBus topic trigger function processed message', mySbMsg);",
+			"    context.done();",
+			"};"
+		],
+		"description": "A Node.js function that will be run whenever a message is added to the specified Service Bus topic"
+	},
+
+	"TimerTrigger - JS": {
+		"prefix": "azurefunctions-TimerTrigger-js",
+		"body": [
+			
+		],
+		"description": "A Node.js function that will be run on a specified schedule"
 	}
 }
